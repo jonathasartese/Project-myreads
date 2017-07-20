@@ -19,7 +19,7 @@ class BooksApp extends React.Component {
       { shelf: 'currentlyReading', name: 'Currently Reading' }, 
       { shelf: 'wantToRead', name: 'Want to Read' },
       { shelf: 'read', name: 'Read'}],
-    allBooks: [],
+    allBooks: []
   }
 
   componentDidMount() {

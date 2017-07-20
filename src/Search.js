@@ -7,22 +7,29 @@ class Search extends Component {
 
     state = {
         ListBook: [],
-        SaveQuery: ''
+        SaveQuery: '',
+        myBooks: []
+    }
+
+    componentDidMount() {
+        BooksAPI.getAll().then((myBooks) => {
+        this.setState({ myBooks })
+        })
     }
 
     SearchBook = (query) => {
         if (query.trim() !== '') {
-            BooksAPI.search(query).then(res => {
-            if (res && res.length) this.setState({ListBook: res, SaveQuery: query})
+            BooksAPI.search(query).then((res) => {
+                res.map(book => (this.state.myBooks.filter((b) => b.id === book.id).map(b => book.shelf = b.shelf)))
+                if (res && res.length) this.setState({ListBook: res, SaveQuery: query})
+                if (res.error) this.setState({ListBook: [], SaveQuery: query})
             })
-        }
+        } else { this.setState({ ListBook: [] }) }
     }
 
     updateSearch = (Book, event) => {
-        BooksAPI.update(Book, event).then(() => { 
-            this.SearchBook(this.SaveQuery).then((ListBook) => {
-                this.setState({ ListBook })
-            })
+        BooksAPI.update(Book, event).then((res) => { 
+            this.SearchBook(this.state.SaveQuery)
         })
     }
 
@@ -42,7 +49,7 @@ class Search extends Component {
                 </div>
                 <div className="search-books-results">
                     <Books
-                        allBooks={this.state.allBooks}
+                        allBooks={this.state.ListBook}
                         updateBook={(Book, event) => (
                             this.updateSearch(Book, event)
                         )}
