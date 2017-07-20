@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import { Books } from './Books'
+import Books from './Books'
 
 class Search extends Component {
 
-    states = {
+    state = {
         ListBook: [],
         SaveQuery: ''
     }
@@ -42,7 +42,7 @@ class Search extends Component {
                 </div>
                 <div className="search-books-results">
                     <Books
-                        allBooks={this.state.ListBook}
+                        allBooks={this.state.allBooks}
                         updateBook={(Book, event) => (
                             this.updateSearch(Book, event)
                         )}
