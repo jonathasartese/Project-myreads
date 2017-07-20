@@ -12,14 +12,18 @@ class Books extends Component {
                     <li key={Book.id}>
                         <div className="book">
                             <div className="book-top">
+
+                                
                                 <div className="book-cover" style={{ 
                                     width: 128, 
                                     height: 193, 
-                                    backgroundImage: `url(${Book.imageLinks.smallThumbnail})`
+                                    backgroundImage: `url(${Book.imageLinks && Book.imageLinks.smallThumbnail})`
                                     }}>
                                 </div>
+                                
+
                                     <div className="book-shelf-changer">
-                                        <select value={Book.shelf} onChange={(event) => updateBook(Book, event.target.value)}>
+                                        <select value={Book.shelf} onChange={(event) => updateBook(Book, event)}>
                                             <option value="none" disabled>Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
                                             <option value="wantToRead">Want to Read</option>

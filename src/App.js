@@ -28,22 +28,15 @@ class BooksApp extends React.Component {
     })
   }
 
-  updateBook = (Book, event) => {
-   BooksAPI.update(Book, event).then(() => { 
-     BooksAPI.getAll().then((allBooks) => {
-       this.setState({ allBooks })
-      })
+   updateBook = (Book, event) => {
+     Book.shelf = event.target.value
+     BooksAPI.update(Book, event.target.value).then((response) => {
+      let newCollection = this.state.allBooks
+        .filter(b => b.id !== Book.id)
+        .concat([ Book ])
+      this.setState({ allBooks: newCollection })
     })
   }
-
- /* SearchBook = (query) => {
-    if (query.trim() !== '') {
-      BooksAPI.search(query).then(res => {
-        if (res && res.length) {this.setState({allBooks: res})
-        } 
-      })
-    }
-  }*/
 
   render() {
     return (
@@ -58,7 +51,12 @@ class BooksApp extends React.Component {
         )} />
 
         <Route path='/search' render={() => (
-          <Search />
+          <Search 
+            allBooks={this.state.allBooks}
+            updateBook={(Book, event) => {
+            this.updateBook(Book, event)
+          }}
+          />
         )} />
 
       </div>
