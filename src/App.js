@@ -19,7 +19,7 @@ class BooksApp extends React.Component {
       { shelf: 'currentlyReading', name: 'Currently Reading' }, 
       { shelf: 'wantToRead', name: 'Want to Read' },
       { shelf: 'read', name: 'Read'}],
-    allBooks: []
+    allBooks: [],
   }
 
   componentDidMount() {
@@ -29,12 +29,21 @@ class BooksApp extends React.Component {
   }
 
   updateBook = (Book, event) => {
-    BooksAPI.update(Book, event).then(() => { 
-      BooksAPI.getAll().then((allBooks) => {
-      this.setState({ allBooks })
+   BooksAPI.update(Book, event).then(() => { 
+     BooksAPI.getAll().then((allBooks) => {
+       this.setState({ allBooks })
       })
     })
   }
+
+ /* SearchBook = (query) => {
+    if (query.trim() !== '') {
+      BooksAPI.search(query).then(res => {
+        if (res && res.length) {this.setState({allBooks: res})
+        } 
+      })
+    }
+  }*/
 
   render() {
     return (
@@ -44,7 +53,8 @@ class BooksApp extends React.Component {
             allBooks={this.state.allBooks}
             updateBook={(Book, event) => {
             this.updateBook(Book, event)
-          }} />
+          }}
+           />
         )} />
 
         <Route path='/search' render={() => (

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Books from './Books'
 
 class ListBooks extends Component {
+
     render() {
         const { bookStatus, allBooks, updateBook } = this.props
 
@@ -16,11 +17,12 @@ class ListBooks extends Component {
                         {bookStatus.map((status, index) => (
                             <div key={index} className="bookshelf">
                                 <h2 className="bookshelf-title">{status.name}</h2>
-                                <Books 
-                                    allBooks={allBooks} 
-                                    status={status.shelf}
-                                    updateBook={updateBook}                                                                       
-                                />
+                                <div className="bookshelf-books">
+                                    <Books 
+                                        allBooks={allBooks.filter((book) => book.shelf === status.shelf)} 
+                                        updateBook={updateBook}                                                                       
+                                    />
+                                </div>
                             </div>
                         ))}
                     </div>

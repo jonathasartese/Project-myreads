@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
 
 class Books extends Component {
-    state = {
-
-    }
 
     render() {
-        const { allBooks, status, updateBook } = this.props
-
-        let showBooks = status.toUpperCase().replace(/ /g,'')
-        showBooks = allBooks.filter((book) => book.shelf.toUpperCase() === status.toUpperCase().replace(/ /g,''))
+        const { allBooks , updateBook } = this.props
 
         return(
-            <div className="bookshelf-books">
+            <div>
                 <ol className="books-grid">
-                {showBooks.map((Book) => ( 
+                {allBooks.map((Book) => ( 
                     <li key={Book.id}>
                         <div className="book">
                             <div className="book-top">
@@ -25,7 +19,7 @@ class Books extends Component {
                                     }}>
                                 </div>
                                     <div className="book-shelf-changer">
-                                        <select value={status} onChange={(event) => updateBook(Book, event.target.value)}>
+                                        <select value={Book.shelf} onChange={(event) => updateBook(Book, event.target.value)}>
                                             <option value="none" disabled>Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
                                             <option value="wantToRead">Want to Read</option>
@@ -35,7 +29,7 @@ class Books extends Component {
                                     </div>
                             </div>
                             <div className="book-title">{Book.title}</div>
-                            <div className="book-authors">{Book.authors[0]}</div>
+                            <div className="book-authors">{Book.authors}</div>
                         </div>
                     </li>
                 ))}
